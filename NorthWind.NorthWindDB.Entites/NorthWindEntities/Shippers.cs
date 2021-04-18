@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NorthWind.NorthWindDB.Entites.NorthWindEntities
 {
-    public class Shippers:BaseEntity
+    public class Shippers:BaseEntity,INorthWindEntity
     {
         public int Id { get; set; }
         public string CompanyName { get; set; }

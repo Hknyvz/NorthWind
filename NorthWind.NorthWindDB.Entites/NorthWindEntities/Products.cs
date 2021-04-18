@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NorthWind.NorthWindDB.Entites.NorthWindEntities
 {
-    public class Products:BaseEntity
+    public class Products:BaseEntity,INorthWindEntity
     {
         public int Id { get; set; }
         public int? SupplierID { get; set; }
