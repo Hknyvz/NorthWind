@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NorthWind.NorthWindDB.WebAPI.MiddleWares;
+using NorthWind.NorthWindDB.WebAPI.NorthWindApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +23,13 @@ namespace NorthWind.NorthWindDB.WebAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddHttpClient<NorthWindApiService>(option => option.BaseAddress = new Uri(Configuration["baseUrl"]));
             services.AddControllers();
+            services.AddCors(options => options.AddDefaultPolicy(build => build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -36,10 +37,9 @@ namespace NorthWind.NorthWindDB.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors();
             app.UseRouting();
-
-            app.UseAuthorization();
-
+            app.UseLog();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
