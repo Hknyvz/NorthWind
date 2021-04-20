@@ -13,6 +13,7 @@
     <ProjectReference Include="..\NorthWind.NorthWindDB.DTO\NorthWind.NorthWindDB.DTO.csproj" />
     <ProjectReference Include="..\NorthWind.NorthWindDB.Entites\NorthWind.NorthWindDB.Entites.csproj" />
     <ProjectReference Include="..\NorthWind.NorthWindDB.LogLayer\NorthWind.NorthWindDB.LogLayer.csproj" />
+    <ProjectReference Include="..\NorthWind.NorthWindDB.ORM\NorthWind.NorthWindDB.ORM.csproj" />
   </ItemGroup>
 
 </Project>
