@@ -17,9 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWind.NorthWindDB.Entit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWind.NorthWindDB.LogLayer", "NorthWind.NorthWindDB.LogLayer\NorthWind.NorthWindDB.LogLayer.csproj", "{FA670089-B744-48B4-89A2-E889A2E74DAB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWind.NorthWindDB.DTO", "NorthWind.NorthWindDB.DTO\NorthWind.NorthWindDB.DTO.csproj", "{3BCD4F51-93A9-4A4A-9BBE-67395D211CD3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthWind.NorthWindDB.ORM", "NorthWind.NorthWindDB.ORM\NorthWind.NorthWindDB.ORM.csproj", "{ACCCF400-AF70-4042-BB7E-26C6411BF7CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthWind.NorthWindDB.ORM", "NorthWind.NorthWindDB.ORM\NorthWind.NorthWindDB.ORM.csproj", "{ACCCF400-AF70-4042-BB7E-26C6411BF7CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +53,6 @@ Global
 		{FA670089-B744-48B4-89A2-E889A2E74DAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA670089-B744-48B4-89A2-E889A2E74DAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA670089-B744-48B4-89A2-E889A2E74DAB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3BCD4F51-93A9-4A4A-9BBE-67395D211CD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3BCD4F51-93A9-4A4A-9BBE-67395D211CD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3BCD4F51-93A9-4A4A-9BBE-67395D211CD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3BCD4F51-93A9-4A4A-9BBE-67395D211CD3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ACCCF400-AF70-4042-BB7E-26C6411BF7CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ACCCF400-AF70-4042-BB7E-26C6411BF7CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACCCF400-AF70-4042-BB7E-26C6411BF7CC}.Release|Any CPU.ActiveCfg = Release|Any CPU

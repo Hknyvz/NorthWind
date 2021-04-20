@@ -10,8 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NorthWind.NorthWindDB.Entites\NorthWind.NorthWindDB.Entites.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,81 @@
+﻿
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Customer</th>
+            <th scope="col">EmployeeId</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Required Date</th>
+            <th scope="col">Shipped Date</th>
+            <th scope="col">Ship Via</th>
+            <th scope="col">Freight</th>
+            <th scope="col">Ship Name</th>
+            <th scope="col">#</th>
+            
+            
+
+        </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+</table>
+
+<script src="~/lib/jquery/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(() => {
+
+        $.ajax({
+            url: `http://localhost:61643/api/order`,
+            method: "get",
+            dataType: "json",
+            success: (result) => {
+                createTable(result);
+            }
+        });
+
+
+        function createTable(response) {
+            let trElement = "";
+            let array = [...response];
+            console.log(array);
+            array.map(item => {
+                let orderDate = item.orderDate;
+                let requiredDate = item.requiredDate;
+                let shippedDate = item.shippedDate;
+                orderDate = orderDate.substring(0, 10);
+                requiredDate = requiredDate.substring(0, 10);
+                shippedDate = shippedDate.substring(0, 10);
+                trElement += `<tr id="${item.id}">
+                    <td>${item.customerId}</td>
+                    <td>${item.employeeId}</td>
+                    <td>${orderDate}</td>
+                    <td>${requiredDate}</td>
+                    <td>${shippedDate}</td>
+                    <td>${item.shipVia}</td>
+                    <td>${item.freight}</td>
+                    <td>${item.shipName}</td>
+                    <td>
+                     <button id="${item.id}-delete" class="btn btn-danger btn-sm w-100" onclick="edit(${item.id})">Delete</button>
+                    </td>
+                  </tr>`
+            })
+
+            document.getElementById("tbody").innerHTML = trElement;
+        }
+
+
+    });
+        function edit(id) {
+            console.log(id);
+            $.ajax({
+                url: `http://localhost:61643/api/order/?id=${id}`,
+                
+                method: "delete",
+                success: (res) => {
+                    console.log(res);
+                }
+            })
+        }
+</script>
