@@ -1,4 +1,7 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 <table class="table">
     <thead>
         <tr>
@@ -11,8 +14,8 @@
             <th scope="col">Freight</th>
             <th scope="col">Ship Name</th>
             <th scope="col">#</th>
-            
-            
+
+
 
         </tr>
     </thead>
@@ -67,15 +70,15 @@
 
 
     });
-        function edit(id) {
-            console.log(id);
-            $.ajax({
-                url: `http://localhost:61643/api/order/?id=${id}`,
-                
-                method: "delete",
-                success: (res) => {
-                    console.log(res);
-                }
-            })
-        }
+    function edit(id) {
+        console.log(id);
+        $.ajax({
+            url: `http://localhost:61643/api/order/?id=${id}`,
+
+            method: "delete",
+            success: (res) => {
+                console.log(res);
+            }
+        })
+    }
 </script>

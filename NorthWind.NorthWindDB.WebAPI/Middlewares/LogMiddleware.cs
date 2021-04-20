@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NorthWind.NorthWindDB.WebAPI.Middlewares
+namespace NorthWind.NorthWindDB.WebAPI.MiddleWares
 {
     public class LogMiddleware
     {
@@ -19,8 +19,8 @@ namespace NorthWind.NorthWindDB.WebAPI.Middlewares
         public Task Invoke(HttpContext httpContext)
         {
             ConnectionInfo connectionInfo = httpContext.Connection;
-
-            HttpRequest httpRequest = httpContext.Request;
+            
+            HttpRequest httpRequest= httpContext.Request;
             return _next(httpContext);
 
         }
@@ -34,4 +34,3 @@ namespace NorthWind.NorthWindDB.WebAPI.Middlewares
         }
     }
 }
-
