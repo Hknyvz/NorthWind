@@ -1,0 +1,21 @@
+﻿.link{
+    text-decoration:none;
+    color:white;
+    width:100%;
+    display:block;
+}
+.link:hover{
+    color:white;
+}
+
+.address-table{
+    width:200px;
+}
+
+.title{
+    width:75px;
+}
+
+.territory-ids{
+    width:50px;
+}

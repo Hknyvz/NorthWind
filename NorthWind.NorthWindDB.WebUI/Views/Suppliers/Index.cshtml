@@ -2,3 +2,73 @@
     ViewData["Title"] = "Suppliers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div>
+    <button class="btn btn-info mt-2" onclick="addRecord()">New Employee</button>
+</div>
+<div hidden id="sendData" class="input-group input-group-sm m-3">
+    <div class="w-100 d-flex justify-content-end">
+        <button class="btn btn-close" onclick="exit()"></button>
+    </div>
+    <div class="row w-100 m-2 d-flex justify-content-center">
+        <div class="col-4 mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Company Name</span>
+            <input id="company-name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col-4 mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Contact Name</span>
+            <input id="contact-name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col-4 mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Contact Title</span>
+            <input id="contact-title" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+
+        <hr class="mt-3" />
+
+        <div class="col-4 mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Street</span>
+            <input id="street" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col-4 mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Region</span>
+            <input id="region" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col-4 mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">City</span>
+            <input id="city" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col-4 mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Country</span>
+            <input id="country" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col-4 mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Postal Code</span>
+            <input id="postal-code" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col-4 mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Phone</span>
+            <input id="phone" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+    </div>
+    <div class="w-100 d-flex justify-content-end">
+        <button class="btn btn-primary m-2" id="add-btn" onclick="add()">Add</button>
+        <button class="btn btn-primary m-2" id="edit-btn" onclick="edit()">Edit</button>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Company Name</th>
+            <th scope="col">Contact Name</th>
+            <th scope="col">Contact Title</th>
+            <th scope="col" class="address-table">Address</th>
+            <th scope="col">#</th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+</table>
+
+
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script src="~/js/supplier.js"></script>

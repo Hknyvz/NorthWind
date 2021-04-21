@@ -68,7 +68,7 @@ namespace NorthWind.NorthWindDB.WebAPI.NorthWindApi
             return Convert.ToInt32(response.StatusCode);
         }
 
-        public async Task<int> DeleteEntityAsync<T>(int id) where T : class, INorthWindEntity, new()
+        public async Task<int> DeleteEntityAsync<T>(string id) where T : class, INorthWindEntity, new()
         {
             T entity = new T();
             var response = await httpClient.DeleteAsync($"{entity}/{id}");

@@ -2,3 +2,77 @@
     ViewData["Title"] = "Products";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div>
+    <button class="btn btn-info mt-2" onclick="addRecord()">New Product</button>
+</div>
+<div hidden id="sendData" class="input-group input-group-sm m-3">
+    <div class="w-100 d-flex justify-content-end">
+        <button class="btn btn-close" onclick="exit()"></button>
+    </div>
+    <div class="row w-100 d-flex justify-content-center m-2">
+        <div class="col-6">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Name</span>
+            <input id="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+
+        <div class="col-6 mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Discontinued</span>
+            <input id="discontinued" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <hr class="mt-3" />
+
+        <div class="col mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Supplier Id</span>
+            <input id="supplier-id" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Category Id</span>
+            <input id="category-id" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Quantity per Unit</span>
+            <input id="quantity-per-unit" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Unit Price</span>
+            <input id="unit-price" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Units In Stock</span>
+            <input id="unit-in-stock" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Units On Order</span>
+            <input id="units-on-order" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="col mt-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Recorder Level</span>
+            <input id="reorder-level" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        </div>
+    </div>
+    <div class="w-100 d-flex justify-content-end">
+        <button class="btn btn-primary m-2" id="add-btn" onclick="add()">Add</button>
+        <button class="btn btn-primary m-2" id="edit-btn" onclick="edit()">Edit</button>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Supplier Id</th>
+            <th scope="col">Category Id</th>
+            <th scope="col">Quantity per Unit</th>
+            <th scope="col">Unit Price</th>
+            <th scope="col">Units In Stock</th>
+            <th scope="col">Units In Order</th>
+            <th scope="col">Reorder Level</th>
+            <th scope="col">Discontinued</th>
+            <th scope="col">#</th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+</table>
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script defer src="~/js/product.js"></script>
