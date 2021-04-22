@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NorthWind.NorthWindDB.DesktopUI.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,15 +17,60 @@ namespace NorthWind.NorthWindDB.DesktopUI
         public MainPage()
         {
             InitializeComponent();
+            //HttpClient httpClient = new HttpClient();
+            //httpClient.DefaultRequestHeaders.Add("ClientType", "Desktop");
+            //httpClient.BaseAddress = new Uri("http://localhost:61643/");
+            //HttpResponseMessage response = await httpClient.GetAsync("api/category");
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        
+
+
+        private void orders_Click(object sender, EventArgs e)
         {
-            HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("ClientType", "Desktop");
-            httpClient.BaseAddress = new Uri("http://localhost:61643/");
-            HttpResponseMessage response = await httpClient.GetAsync("api/category");
-            
+            OrdersPage ordersPage = new OrdersPage();
+            ordersPage.ShowDialog();
+        }
+        private void categories_Click(object sender, EventArgs e)
+        {
+            CategoriesPage categoriesPage = new CategoriesPage();
+            categoriesPage.ShowDialog();
+        }
+
+        private void products_Click(object sender, EventArgs e)
+        {
+            ProductsPage productsPage = new ProductsPage();
+            productsPage.ShowDialog();
+        }
+
+        private void customers_Click(object sender, EventArgs e)
+        {
+            CustomersPage customersPage = new CustomersPage();
+            customersPage.ShowDialog();
+        }
+
+        private void suppliers_Click(object sender, EventArgs e)
+        {
+            SuppliersPage suppliersPage = new SuppliersPage();
+            suppliersPage.ShowDialog();
+        }
+
+        private void employees_Click(object sender, EventArgs e)
+        {
+            EmployeesPage employeesPage = new EmployeesPage();
+            employeesPage.ShowDialog();
+        }
+
+        private void shippers_Click(object sender, EventArgs e)
+        {
+            ShippersPage shippersPage = new ShippersPage();
+            shippersPage.ShowDialog();
+        }
+
+        private void logs_Click(object sender, EventArgs e)
+        {
+            LogsPage logsPage = new LogsPage();
+            logsPage.ShowDialog();
         }
     }
 }
