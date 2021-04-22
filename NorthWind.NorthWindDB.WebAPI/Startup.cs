@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NorthWind.NorthWindDB.BLL.Services;
+using NorthWind.NorthWindDB.LogLayer;
 using NorthWind.NorthWindDB.ORM;
 using NorthWind.NorthWindDB.ORM.MsSqlServer;
 using NorthWind.NorthWindDB.WebAPI.NorthWindApi;
@@ -26,6 +28,7 @@ namespace NorthWind.NorthWindDB.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScopedObjects();
             services.AddDbCreate<MsSqlOperation>();
             services.AddHttpClient<NorthWindApiService>(option => option.BaseAddress = new Uri(Configuration["baseUrl"]));
             services.AddControllers();
@@ -38,7 +41,7 @@ namespace NorthWind.NorthWindDB.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseLog();
             app.UseCors();
             app.UseRouting();
             app.UseEndpoints(endpoints =>

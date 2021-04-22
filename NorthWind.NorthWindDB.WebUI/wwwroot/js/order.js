@@ -43,7 +43,14 @@ function createTable(response) {
     document.getElementById("tbody").innerHTML = trElement;
 }
 function get() {
-    fetch(`http://localhost:61643/api/order`)
+    let headers = new Headers();
+    headers.append("ClientType", "Web");
+    fetch(`http://localhost:61643/api/order`, {
+        headers: headers,
+        method: "Get",
+        mode: "cors",
+        
+    })
         .then(res => res.json())
         .then(res => {
             createTable(res);

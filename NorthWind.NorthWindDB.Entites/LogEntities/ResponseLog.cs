@@ -12,8 +12,7 @@ namespace NorthWind.NorthWindDB.Entites.LogEntities
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [MaxLength(10)]
-        public string ClientType { get; set; }
+      
         [MaxLength(100)]
         public string Path { get; set; }
         public short SatatusCode { get; set; }

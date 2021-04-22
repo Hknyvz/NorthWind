@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +15,7 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
         SqlConnection sqlConnection;
         public MsSqlOperation()
         {
-            this.sqlConnection = ContextDb.Connection;
+            sqlConnection = ContextDb.Connection;
         }
         public bool CreateDatabase()
         {
@@ -30,8 +32,6 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
             }
             return false;
         }
-
-
         public void CreateTable<T>() where T : IEntity
         {
             Type type = typeof(T);
@@ -41,7 +41,6 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
             sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
         }
-
         private bool IsExistDb(SqlConnection connectionString, string databaseName)
         {
 
@@ -65,7 +64,6 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
 
             return (databaseID > 0);
         }
-
         private string CreateTableCommand(Type type)
         {
             string init = $"CREATE TABLE dbo.{type.Name}(";
@@ -90,7 +88,6 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
             }
             return $"{init} {end}";
         }
-
         private string GetMasterDbConnection(string sqlConnection)
         {
             string[] split = sqlConnection.Split(" ");
@@ -107,7 +104,6 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
             }
             return newSqlConneciton;
         }
-
         private string GetDbName()
         {
             string subString = null;
@@ -121,6 +117,34 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
                 }
             }
             return subString;
+        }
+        public void Add<TEntity>(TEntity entity) where TEntity : IEntity
+        {
+            Type type = typeof(TEntity);
+            string command = $"INSERT INTO dbo.{type.Name} values(";
+            foreach (var item in type.GetProperties())
+            {
+                string name = item.Name.ToLower(new CultureInfo("en-US"));
+                if (name!="id"&&name!=$"{type.Name}id")
+                {
+                    if (item.PropertyType == typeof(DateTime))
+                    {
+                        command += $"'{((DateTime)item.GetValue(entity)).ToString("yyyy-MM-dd HH:mm:ss")}',";
+                    }
+                    else
+                    {
+                        command += $"'{item.GetValue(entity)}',";
+                    }
+                }
+
+            }
+            command = command.Remove(command.Length - 1);
+            command += ")";
+            SqlCommand sqlCommand = new SqlCommand(command, sqlConnection);
+
+            sqlConnection.Open();
+            sqlCommand.ExecuteNonQuery();
+            sqlConnection.Close();
         }
     }
 }
