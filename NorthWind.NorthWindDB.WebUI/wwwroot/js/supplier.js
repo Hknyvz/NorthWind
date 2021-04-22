@@ -3,7 +3,7 @@
 let editingData = {};
 
 $(document).ready(() => {
-    getData();
+    get();
 });
 
 function createTable(response) {
@@ -27,16 +27,15 @@ function createTable(response) {
     document.getElementById("tbody").innerHTML = trElement;
 }
 
-function getData() {
-    $.ajax({
-        url: `http://localhost:61643/api/supplier`,
-        method: "get",
-        dataType: "json",
-        success: (result) => {
-            createTable(result);
-            responseData = [...result];
-        }
-    });
+function get() {
+    fetch(`http://localhost:61643/api/supplier`)
+        .then(res => res.json())
+        .then(res => {
+            createTable(res);
+            responseData = [...res];
+            response = res;
+        }).catch(err => console.log(err));
+    
 }
 
 function addRecord() {
@@ -83,11 +82,12 @@ function edit() {
     let city = $("#city").val();
     let country = $("#country").val();
     let postalCode = $("#postal-code").val();
-
-    $.ajax({
-        url: `http://localhost:61643/api/supplier`,
+    fetch(`http://localhost:61643/api/supplier`, {
         method: "put",
-        data: {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
             id: editingData.id,
             companyName: companyName,
             contactName: contactName,
@@ -100,18 +100,17 @@ function edit() {
                 "country": country,
                 "postalCode": postalCode,
             }
-        },
-        success: (res) => {
+        }),
+
+    }).then(res => {
+        if (res.ok) {
             $("#sendData").hide();
             getData();
-        },
-
-        error: (err) => {
-            $("#errorName").html("Can't edit");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
+        }
+    }).catch(err => {
+        $("#errorName").html("Can't record");
+        console.log(err);
+    });
 
 }
 
@@ -127,12 +126,12 @@ function add() {
     let city = $("#city").val();
     let country = $("#country").val();
     let postalCode = $("#postal-code").val();
-
-    console.log(territoryIdArray);
-    $.ajax({
-        url: `http://localhost:61643/api/supplier`,
+    fetch(`http://localhost:61643/api/supplier`, {
         method: "post",
-        data: {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
             companyName: companyName,
             contactName: contactName,
             contactTitle: contactTitle,
@@ -144,19 +143,18 @@ function add() {
                 "country": country,
                 "postalCode": postalCode,
             },
-        },
-        success: (res) => {
+        }),
+
+    }).then(res => {
+        if (res.ok) {
             $("#sendData").hide();
             getData();
-        },
-
-        error: (err) => {
-            $("#errorName").html("Can't record");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
-
+        }
+    }).catch(err => {
+        $("#errorName").html("Can't record");
+        console.log(err);
+    });
+    
 }
 
 function exit() {
@@ -178,13 +176,17 @@ function exit() {
 }
 
 function deleteRecord(id) {
-    console.log(id);
-    $.ajax({
-        url: `http://localhost:61643/api/supplier/?id=${id}`,
-
+    fetch(`http://localhost:61643/api/supplier/?id=${id}`, {
         method: "delete",
-        success: (res) => {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+
+    }).then(res => {
+        if (res.ok) {
             $(`#${id}`).remove();
         }
-    })
+    }).catch(err => {
+        console.log(err);
+    });
 }

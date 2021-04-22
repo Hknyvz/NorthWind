@@ -3,24 +3,31 @@
 let editingData = {};
 
 $(document).ready(() => {
-    getData();
+    get();
 });
 
 function createTable(response) {
+
     let trElement = "";
     let array = [...response];
     array.map(item => {
         let birthDate = item.birthDate;
         let hireDate = item.hireDate;
-        birthDate = birthDate.substring(0, 10);
-        hireDate = hireDate.substring(0, 10);
+        if (item.birthDate != null && item.hireDate != null) {
+            birthDate = birthDate.substring(0, 10);
+            hireDate = hireDate.substring(0, 10);
+        }
         let territoryIdText = "";
         let territoryIds = [...item.territoryIds];
         for (var i = 0; i < territoryIds.length; i++) {
             territoryIdText += `${territoryIds[i]}-`;
         }
         territoryIdText = territoryIdText.substring(0, territoryIdText.length - 1);
-
+        let fullAddress = "";
+        debugger;
+        if (item.address != null) {
+            fullAddress = `${item.address.street} ${item.address.city} ${item.address.country} ${item.address.region === "Null" ? item.address.region : " "}`
+        }
         trElement += `<tr id="${item.id}">
                     <td>${item.firstName}</td>
                     <td>${item.lastName}</td>
@@ -29,7 +36,7 @@ function createTable(response) {
                     <td>${birthDate}</td>
                     <td>${hireDate}</td>
                      <td>
-                        ${item.address.street} ${item.address.city} ${item.address.country} ${item.address.region === "Null" ? item.address.region : " "}
+                        ${fullAddress}
                     </td>
                     <td>${item.notes}</td>
                     <td>${item.reportsTo != "NULL" ? item.reportsTo : ""}</td>
@@ -40,19 +47,18 @@ function createTable(response) {
                     </td>
                   </tr>`
     })
-    $("#tbody").html(trElement);
+    document.getElementById("tbody").innerHTML = trElement;
 }
 
-function getData() {
-    $.ajax({
-        url: `http://localhost:61643/api/employee`,
-        method: "get",
-        dataType: "json",
-        success: (result) => {
-            createTable(result);
-            responseData = [...result];
-        }
-    });
+function get() {
+
+    fetch(`http://localhost:61643/api/employee`)
+        .then(res => res.json())
+        .then(res => {
+            createTable(res);
+            responseData = [...res];
+            response = res;
+        }).catch(err => console.log(err));
 }
 
 function addRecord() {
@@ -117,11 +123,12 @@ function edit() {
     let notes = $("#notes").val();
 
     let territoryIdArray = territoryIds.split(",");
-
-    $.ajax({
-        url: `http://localhost:61643/api/employee`,
+    fetch(`http://localhost:61643/api/employee`, {
         method: "put",
-        data: {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
             "id": editingData.id,
             "firstName": firstName,
             "lastName": lastName,
@@ -140,19 +147,17 @@ function edit() {
             "reportsTo": reportsTo,
             "territoryIds": territoryIdArray,
             "notes": notes
-        },
-        success: (res) => {
+        }),
+
+    }).then(res => {
+        if (res.ok) {
             $("#sendData").hide();
-            getData();
-        },
-
-        error: (err) => {
-            $("#errorName").html("Can't edit");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
-
+            get();
+        }
+    }).catch(err => {
+        $("#errorName").html("Can't record");
+        console.log(err);
+    });
 }
 
 function add() {
@@ -178,10 +183,12 @@ function add() {
 
     let territoryIdArray = territoryIds.split(",");
     console.log(territoryIdArray);
-    $.ajax({
-        url: `http://localhost:61643/api/employee`,
+    fetch(`http://localhost:61643/api/employee`, {
         method: "post",
-        data: {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
             "firstName": firstName,
             "lastName": lastName,
             "title": title,
@@ -199,19 +206,17 @@ function add() {
             "reportsTo": reportsTo,
             "territoryIds": territoryIdArray,
             "notes": notes
-        },
-        success: (res) => {
+        }),
+
+    }).then(res => {
+        if (res.ok) {
             $("#sendData").hide();
-            getData();
-        },
-
-        error: (err) => {
-            $("#errorName").html("Can't record");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
-
+            get();
+        }
+    }).catch(err => {
+        $("#errorName").html("Can't record");
+        console.log(err);
+    });
 }
 
 function exit() {
@@ -242,12 +247,18 @@ function exit() {
 
 function deleteRecord(id) {
     console.log(id);
-    $.ajax({
-        url: `http://localhost:61643/api/employee/?id=${id}`,
-
+    fetch(`http://localhost:61643/api/employee/?id=${id}`, {
         method: "delete",
-        success: (res) => {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+
+    }).then(res => {
+        if (res.ok) {
             $(`#${id}`).remove();
         }
-    })
+    }).catch(err => {
+        console.log(err);
+    });
+
 }

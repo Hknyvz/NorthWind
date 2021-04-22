@@ -3,7 +3,7 @@
 let editingData = {};
 
 $(document).ready(() => {
-    getData();
+    get();
 });
 
 function createTable(response) {
@@ -23,16 +23,15 @@ function createTable(response) {
     document.getElementById("tbody").innerHTML = trElement;
 }
 
-function getData() {
-    $.ajax({
-        url: `http://localhost:61643/api/shipper`,
-        method: "get",
-        dataType: "json",
-        success: (result) => {
-            createTable(result);
-            responseData = [...result];
-        }
-    });
+function get() {
+    fetch(`http://localhost:61643/api/shipper`)
+        .then(res => res.json())
+        .then(res => {
+            createTable(res);
+            responseData = [...res];
+            response = res;
+        }).catch(err => console.log(err));
+    
 }
 
 function addRecord() {
@@ -48,15 +47,20 @@ function editRecord(id) {
 }
 
 function deleteRecord(id) {
-    console.log(id);
-    $.ajax({
-        url: `http://localhost:61643/api/shipper/?id=${id}`,
-
+    fetch(`http://localhost:61643/api/shipper/?id=${id}`, {
         method: "delete",
-        success: (res) => {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+
+    }).then(res => {
+        if (res.ok) {
             $(`#${id}`).remove();
         }
-    })
+    }).catch(err => {
+        console.log(err);
+    });
+   
 }
 
 function openSendData(type) {
@@ -76,45 +80,44 @@ function openSendData(type) {
 function edit() {
     let companyName = $("#company-nama").val();
     let phone = $("#phone").val();
-
-    $.ajax({
-        url: `http://localhost:61643/api/shipper`,
+    fetch(`http://localhost:61643/api/shipper`, {
         method: "put",
-        data: { id: editingData.id, companyName: companyName, phone: phone },
-        success: (res) => {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({ id: editingData.id, companyName: companyName, phone: phone }),
+
+    }).then(res => {
+        debugger
+        if (res.ok) {
             $("#sendData").hide();
-            getData();
-        },
-
-        error: (err) => {
-            $("#errorName").html("Can't edit");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
-
+            get();
+        }
+    }).catch(err => {
+        $("#errorName").html("Can't record");
+        console.log(err);
+    });
 }
 
 function add() {
     let companyName = $("#company-name").val();
     let phone = $("#phone").val();
-
-    $.ajax({
-        url: `http://localhost:61643/api/shipper`,
+    fetch(`http://localhost:61643/api/shipper`, {
         method: "post",
-        data: { companyName: companyName, phone: phone },
-        success: (res) => {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({ companyName: companyName, phone: phone }),
+
+    }).then(res => {
+        if (res.ok) {
             $("#sendData").hide();
-            getData();
-        },
-
-        error: (err) => {
-            $("#errorName").html("Can't record");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
-
+            get();
+        }
+    }).catch(err => {
+        $("#errorName").html("Can't record");
+        console.log(err);
+    });
 }
 
 function exit() {

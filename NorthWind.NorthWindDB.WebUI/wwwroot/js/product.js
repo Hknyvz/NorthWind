@@ -3,7 +3,7 @@
 let editingData = {};
 
 $(document).ready(() => {
-    getData();
+    get();
 });
 
 function createTable(response) {
@@ -30,16 +30,14 @@ function createTable(response) {
     document.getElementById("tbody").innerHTML = trElement;
 }
 
-function getData() {
-    $.ajax({
-        url: `http://localhost:61643/api/product`,
-        method: "get",
-        dataType: "json",
-        success: (result) => {
-            createTable(result);
-            responseData = [...result];
-        }
-    });
+function get() {
+    fetch(`http://localhost:61643/api/product`)
+        .then(res => res.json())
+        .then(res => {
+            createTable(res);
+            responseData = [...res];
+            response = res;
+        }).catch(err => console.log(err));
 }
 
 function addRecord() {
@@ -61,15 +59,19 @@ function editRecord(id) {
 }
 
 function deleteRecord(id) {
-    console.log(id);
-    $.ajax({
-        url: `http://localhost:61643/api/product/?id=${id}`,
-
+    fetch(`http://localhost:61643/api/product/?id=${id}`, {
         method: "delete",
-        success: (res) => {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+
+    }).then(res => {
+        if (res.ok) {
             $(`#${id}`).remove();
         }
-    })
+    }).catch(err => {
+        console.log(err);
+    });
 }
 
 function openSendData(type) {
@@ -96,11 +98,12 @@ function edit() {
     let unitsOnOrder = $("#units-on-order").val();
     let reorderLevel = $("#reorder-level").val();
     let discontinued = $("#discontinued").val();
-
-    $.ajax({
-        url: `http://localhost:61643/api/category`,
+    fetch(`http://localhost:61643/api/product`, {
         method: "put",
-        data: {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
             supplierID: supplierID,
             name: name,
             categoryID: categoryID,
@@ -110,19 +113,16 @@ function edit() {
             reorderLevel: reorderLevel,
             unitsOnOrder: unitsOnOrder,
             discontinued: discontinued
-        },
-        success: (res) => {
+        }),
+
+    }).then(res => {
+        if (res.ok) {
             $("#sendData").hide();
-            getData();
-        },
-
-        error: (err) => {
-            $("#errorName").html("Can't edit");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
-
+            get();
+        }
+    }).catch(err => {
+        console.log(err);
+    });
 }
 
 function add() {
@@ -135,11 +135,14 @@ function add() {
     let unitsOnOrder = $("#units-on-order").val();
     let reorderLevel = $("#reorder-level").val();
     let discontinued = $("#discontinued").val();
-
-    $.ajax({
-        url: `http://localhost:61643/api/product`,
+    
+    debugger;
+    fetch(`http://localhost:61643/api/product`, {
         method: "post",
-        data: {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
             supplierID: supplierID,
             name: name,
             categoryID: categoryID,
@@ -148,20 +151,19 @@ function add() {
             unitPrice: unitPrice,
             reorderLevel: reorderLevel,
             unitsOnOrder: unitsOnOrder,
-            discontinued: discontinued
-        },
-        success: (res) => {
+            discontinued: discontinued,
+            //supplier: null,
+            //category:null
+        }),
+
+    }).then(res => {
+        if (res.ok) {
             $("#sendData").hide();
-            getData();
-        },
-
-        error: (err) => {
-            $("#errorName").html("Can't record");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
-
+            get();
+        }
+    }).catch(err => {
+        console.log(err);
+    });
 }
 
 function exit() {

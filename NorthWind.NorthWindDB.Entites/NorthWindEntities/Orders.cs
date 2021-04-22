@@ -9,7 +9,6 @@ namespace NorthWind.NorthWindDB.Entites.NorthWindEntities
         {
             Details = new HashSet<OrderDetails>();
         }
-        List<string> columnName=new List<string>();
         public int Id { get; set; }
         public string CustomerId { get; set; }
         public int? EmployeeId { get; set; }

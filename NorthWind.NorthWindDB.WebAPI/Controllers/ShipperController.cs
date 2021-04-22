@@ -27,19 +27,19 @@ namespace NorthWind.NorthWindDB.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromForm] Shippers shipper)
+        public async Task<IActionResult> Add(Shippers shipper)
         {
-            return Ok(await northWindApiService.AddEntityAsync(shipper));
+            return StatusCode(await northWindApiService.AddEntityAsync(shipper));
         }
         [HttpPut]
-        public async Task<IActionResult> Update([FromForm] Shippers shipper)
+        public async Task<IActionResult> Update(Shippers shipper)
         {
-            return Ok(await northWindApiService.UpdateEntityAsync(shipper));
+            return StatusCode(await northWindApiService.UpdateEntityAsync(shipper));
         }
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {
-            return Ok(await northWindApiService.DeleteEntityAsync<Shippers>(id));
+            return StatusCode(await northWindApiService.DeleteEntityAsync<Shippers>(id));
         }
     }
 }

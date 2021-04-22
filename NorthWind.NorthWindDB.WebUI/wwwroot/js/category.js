@@ -1,10 +1,11 @@
 ﻿
+
 let responseData = [];
 
 let editingData = {};
 
 $(document).ready(() => {
-    getData();
+    get();
 });
 
 function createTable(response) {
@@ -24,16 +25,28 @@ function createTable(response) {
     document.getElementById("tbody").innerHTML = trElement;
 }
 
-function getData() {
-    $.ajax({
-        url: `http://localhost:61643/api/category`,
-        method: "get",
-        dataType: "json",
-        success: (result) => {
-            createTable(result);
-            responseData = [...result];
-        }
-    });
+function openSendData(type) {
+    $("#sendData").removeAttr("hidden");
+    $("#sendData").show();
+    switch (type) {
+        case "edit":
+            $("#add-btn").hide();
+            break;
+        case "add":
+            $("#edit-btn").hide();
+            break;
+        default:
+    }
+}
+
+function get() {
+    fetch(`http://localhost:61643/api/category`)
+        .then(res => res.json())
+        .then(res => {
+            createTable(res);
+            responseData = [...res];
+            response = res;
+        }).catch(err => console.log(err));
 }
 
 function addRecord() {
@@ -49,73 +62,62 @@ function editRecord(id) {
 }
 
 function deleteRecord(id) {
-    console.log(id);
-    $.ajax({
-        url: `http://localhost:61643/api/category/?id=${id}`,
-
+    fetch(`http://localhost:61643/api/category/?id=${id}`, {
         method: "delete",
-        success: (res) => {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+
+    }).then(res => {
+        if (res.ok) {
             $(`#${id}`).remove();
         }
-    })
-}
-
-function openSendData(type) {
-    $("#sendData").removeAttr("hidden");
-    $("#sendData").show();
-    switch (type) {
-        case "edit":
-            $("#add-btn").hide();
-            break;
-        case "add":
-            $("#edit-btn").hide();
-            break;
-        default:
-    }
+    }).catch(err => {
+        console.log(err);
+    });
 }
 
 function edit() {
     let name = $("#name").val();
     let description = $("#description").val();
-
-    $.ajax({
-        url: `http://localhost:61643/api/category`,
+    fetch(`http://localhost:61643/api/category`, {
         method: "put",
-        data: { id: editingData.id, description: description, name: name },
-        success: (res) => {
-            $("#sendData").hide();
-            getData();
+        headers: {
+            "Content-Type": 'application/json',
         },
+        body: JSON.stringify({ id: editingData.id, description: description, name: name }),
 
-        error: (err) => {
-            $("#errorName").html("Can't edit");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
-
+    }).then(res => {
+            if (res.ok) {
+                $("#sendData").hide();
+                get();
+            }
+        }).catch(err => {
+            $("#errorName").html("Can't record");
+            console.log(err);
+        });
 }
 
 function add() {
     let name = $("#name").val();
     let description = $("#description").val();
-
-    $.ajax({
-        url: `http://localhost:61643/api/category`,
-        method: "post",
-        data: { description: description, name: name },
-        success: (res) => {
-            $("#sendData").hide();
-            getData();
+    fetch(`http://localhost:61643/api/category`, {
+        method: "Post",
+        headers: {
+            "Content-Type": 'application/json',
         },
+        body: JSON.stringify({ description: description, name: name }),
 
-        error: (err) => {
+    }).then(res => {
+        debugger
+            if (res.ok) {
+                $("#sendData").hide();
+                get();
+            }
+        }).catch(err => {
             $("#errorName").html("Can't record");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
-
+            console.log(err);
+        });
 }
 
 function exit() {

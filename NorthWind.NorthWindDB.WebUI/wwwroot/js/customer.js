@@ -1,17 +1,16 @@
-﻿let responseData = [];
+﻿
+let responseData = [];
 let editingData = {};
 
 $(document).ready(() => {
-    getData();
+    get();
 });
 
 function createTable(response) {
     let trElement = "";
     let array = [...response];
     array.map(item => {
-        let id = item.id;
-        console.log(id);
-        trElement += `<tr id=${id}>
+        trElement += `<tr id=${item.id}>
                     <td>${item.companyName}</td>
                     <td>${item.contactName}</td>
                     <td>${item.contactTitle}</td>
@@ -20,24 +19,23 @@ function createTable(response) {
                     </td>
                     <td>${item.address.phone}</td>
                     <td>
-                     <button id="${id}-edit" class="btn btn-success btn-sm w-100" onclick="editRecord('${id}')"><a href="#sendData" class="link">Edit</a></button>
-                     <button id="${id}-delete" class="btn btn-danger btn-sm w-100" onclick="deleteRecord('${id}')">Delete</button>
+                     <button id="${item.id}-edit" class="btn btn-success btn-sm w-100" onclick="editRecord('${item.id}')"><a href="#sendData" class="link">Edit</a></button>
+                     <button id="${item.id}-delete" class="btn btn-danger btn-sm w-100" onclick="deleteRecord('${item.id}')">Delete</button>
                     </td>
                   </tr>`
     })
+    console.log(trElement);
     document.getElementById("tbody").innerHTML = trElement;
 }
 
-function getData() {
-    $.ajax({
-        url: `http://localhost:61643/api/customer`,
-        method: "get",
-        dataType: "json",
-        success: (result) => {
-            createTable(result);
-            responseData = [...result];
-        }
-    });
+function get() {
+    fetch(`http://localhost:61643/api/customer`)
+        .then(res => res.json())
+        .then(res => {
+            createTable(res);
+            responseData = [...res];
+            response = res;
+        }).catch(err => console.log(err));
 }
 
 function openSendData(type) {
@@ -86,11 +84,12 @@ function edit() {
     let country = $("#country").val();
     let postalCode = $("#postal-code").val();
 
-
-    $.ajax({
-        url: `http://localhost:61643/api/customer`,
+    fetch(`http://localhost:61643/api/customer`, {
         method: "put",
-        data: {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
             "id": editingData.id,
             "companyName": companyName,
             "contactName": contactName,
@@ -104,19 +103,17 @@ function edit() {
                 "postalCode": postalCode
             }
 
-        },
-        success: (res) => {
+        }),
+
+    }).then(res => {
+        if (res.ok) {
             $("#sendData").hide();
-            getData();
-        },
-
-        error: (err) => {
-            $("#errorName").html("Can't edit");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
-
+            get();
+        }
+    }).catch(err => {
+        $("#errorName").html("Can't record");
+        console.log(err);
+    });
 }
 
 function add() {
@@ -129,11 +126,12 @@ function add() {
     let city = $("#city").val();
     let country = $("#country").val();
     let postalCode = $("#postal-code").val();
-
-    $.ajax({
-        url: `http://localhost:61643/api/customer`,
+    fetch(`http://localhost:61643/api/customer`, {
         method: "post",
-        data: {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({
             "companyName": companyName,
             "contactName": contactName,
             "contactTitle": contactTitle,
@@ -146,19 +144,17 @@ function add() {
                 "postalCode": postalCode
             }
 
-        },
-        success: (res) => {
+        }),
+
+    }).then(res => {
+        if (res.ok) {
             $("#sendData").hide();
-            getData();
-        },
-
-        error: (err) => {
-            $("#errorName").html("Can't record");
-            console.log(err.statusCode());
-        },
-        dataType: "json"
-    })
-
+            get();
+        }
+    }).catch(err => {
+        $("#errorName").html("Can't record");
+        console.log(err);
+    });
 }
 
 function exit() {
@@ -178,12 +174,18 @@ function exit() {
 
 function deleteRecord(id) {
     console.log(id);
-    $.ajax({
-        url: `http://localhost:61643/api/customer/?id=${id}`,
-
+    fetch(`http://localhost:61643/api/customer/?id=${id}`, {
         method: "delete",
-        success: (res) => {
+        headers: {
+            "Content-Type": 'application/json',
+        },
+
+    }).then(res => {
+        if (res.ok) {
             $(`#${id}`).remove();
         }
-    })
+    }).catch(err => {
+        console.log(err);
+    });
+
 }
