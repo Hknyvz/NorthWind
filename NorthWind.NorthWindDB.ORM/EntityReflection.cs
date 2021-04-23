@@ -9,7 +9,7 @@ namespace NorthWind.NorthWindDB.ORM
 {
     class EntityReflection
     {
-        Dictionary<string, string> dataType = new Dictionary<string, string>() { { "Int32", "int" }, { "DateTime", "datetime2(7)" }, { "String", "nvarchar(max)" }, {"Int16","tinyint"} };
+        Dictionary<string, string> dataType = new Dictionary<string, string>() { { "Int32", "int" }, { "DateTime", "datetime2(7)" }, { "String", "nvarchar(max)" }, {"Int16","smallint"} };
         PropertyInfo propertyInfo;
         
         public EntityReflection(PropertyInfo propertyInfo)

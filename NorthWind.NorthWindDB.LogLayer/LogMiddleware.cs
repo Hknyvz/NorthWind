@@ -35,7 +35,6 @@ namespace NorthWind.NorthWindDB.LogLayer
             await _next.Invoke(httpContext);
 
             HttpResponse httpResponse= httpContext.Response;
-            string path = httpResponse.HttpContext.Request.Path.Value;
             responseLogBLL.Add(httpResponse);
         }
 

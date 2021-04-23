@@ -38,7 +38,8 @@ namespace NorthWind.NorthWindDB.WebAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(Suppliers supplier)
         {
-            return StatusCode(await northWindApiService.UpdateEntityAsync(supplier));
+            int statusCode = await northWindApiService.UpdateEntityAsync(supplier);
+            return StatusCode(statusCode);
         }
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
