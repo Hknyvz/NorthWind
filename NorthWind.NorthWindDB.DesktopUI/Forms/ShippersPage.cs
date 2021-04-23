@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NorthWind.NorthWindDB.Entites.NorthWindEntities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,16 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
 {
     public partial class ShippersPage : Form
     {
+        ApiServices apiServices;
         public ShippersPage()
         {
             InitializeComponent();
+            apiServices = new ApiServices("shipper");
+        }
+
+        private async void ShippersPage_Load(object sender, EventArgs e)
+        {
+            dgvShippers.DataSource = await apiServices.GetEntitiesAsync<Shippers>();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using NorthWind.NorthWindDB.Entites.LogEntities;
+﻿using NorthWind.NorthWindDB.Entites;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;

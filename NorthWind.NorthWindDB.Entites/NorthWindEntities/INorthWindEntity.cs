@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NorthWind.NorthWindDB.Entites.NorthWindEntities
 {
-    public interface INorthWindEntity
+    public interface INorthWindEntity:IEntity
     {
     }
 }

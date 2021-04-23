@@ -29,12 +29,36 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.dgvProduct = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProduct)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // dgvProduct
+            // 
+            this.dgvProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProduct.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dgvProduct.Location = new System.Drawing.Point(0, 263);
+            this.dgvProduct.Name = "dgvProduct";
+            this.dgvProduct.RowTemplate.Height = 25;
+            this.dgvProduct.Size = new System.Drawing.Size(800, 187);
+            this.dgvProduct.TabIndex = 0;
+            // 
+            // ProductsPage
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dgvProduct);
+            this.Name = "ProductsPage";
             this.Text = "ProductsPage";
+            this.Load += new System.EventHandler(this.ProductsPage_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProduct)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView dgvProduct;
     }
 }

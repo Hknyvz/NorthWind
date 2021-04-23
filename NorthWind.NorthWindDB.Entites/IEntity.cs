@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NorthWind.NorthWindDB.Entites.LogEntities
+namespace NorthWind.NorthWindDB.Entites
 {
     public interface IEntity
     {
