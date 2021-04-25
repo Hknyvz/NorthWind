@@ -26,14 +26,13 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
 
         private async void SuppliersPage_Load(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.WaitCursor;
             await FillDataGridView();
-            Cursor.Current = Cursors.Default;
         }
         private async Task FillDataGridView()
         {
             await FillArray();
             Type type = typeof(Suppliers);
+           
             foreach (var item in type.GetProperties())
             {
                 dgvSuppliers.Columns.Add(item.Name, item.Name);
@@ -41,7 +40,12 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
             dgvSuppliers.Columns.Add("phone", "phone");
             foreach (var item in suppliers)
             {
-                dgvSuppliers.Rows.Add(item.Id, item.CompanyName, item.ContactName, item.ContactTitle, $"{item.Address.Street} {item.Address.City} {item.Address.Country} {item.Address.Region} {item.Address.PostalCode}", item.Address.Phone);
+                string fullAddress = "";
+                if (true)
+                {
+                    fullAddress = $"{item.Address.Street} {item.Address.City} {item.Address.Country} {item.Address.Region} {item.Address.PostalCode}";
+                }
+                dgvSuppliers.Rows.Add(item.Id, item.CompanyName, item.ContactName, item.ContactTitle, fullAddress, item.Address.Phone);
             }
         }
         private async Task FillArray()
@@ -68,7 +72,7 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
 
         private async void btnSend_Click(object sender, EventArgs e)
         {
-            Suppliers suppliers = new Suppliers
+            Suppliers supplier = new Suppliers
             {
                 ContactTitle = tbxContactTitle.Text,
                 CompanyName = tbxCompanyName.Text,
@@ -87,13 +91,13 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
 
             if (isUpdate)
             {
-                suppliers.Id = id;
-                int statusCode = await apiServices.UpdateEntityAsync(suppliers);
+                supplier.Id = id;
+                await apiServices.UpdateEntityAsync(supplier);
                 isUpdate = false;
             }
             else
             {
-                await apiServices.AddEntityAsync(suppliers);
+                await apiServices.AddEntityAsync(supplier);
             }
             await FillDataGridView();
             Clear();

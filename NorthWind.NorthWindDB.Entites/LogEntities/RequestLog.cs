@@ -15,6 +15,7 @@ namespace NorthWind.NorthWindDB.Entites.LogEntities
         [MaxLength(100)]
         public string Path { get; set; }
         [MaxLength(10)]
+        public string SubQuery { get; set; }
         public string Method { get; set; }
         public string Body { get; set; }
         public DateTime CreateDate { get; set; }

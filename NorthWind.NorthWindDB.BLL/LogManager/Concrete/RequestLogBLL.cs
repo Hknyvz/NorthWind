@@ -26,6 +26,7 @@ namespace NorthWind.NorthWindDB.BLL.LogManager.Concrete
                 Path = httpRequest.Path,
                 Method = httpRequest.Method,
                 CreateDate = DateTime.Now,
+                SubQuery=httpRequest.QueryString.Value,
                 Body=body
             };
             requestLogDAL.Add(requestLog);

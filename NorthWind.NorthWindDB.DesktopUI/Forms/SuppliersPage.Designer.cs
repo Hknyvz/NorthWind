@@ -64,7 +64,7 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
             this.dgvSuppliers.Location = new System.Drawing.Point(0, 226);
             this.dgvSuppliers.Name = "dgvSuppliers";
             this.dgvSuppliers.RowTemplate.Height = 25;
-            this.dgvSuppliers.Size = new System.Drawing.Size(800, 224);
+            this.dgvSuppliers.Size = new System.Drawing.Size(775, 224);
             this.dgvSuppliers.TabIndex = 0;
             this.dgvSuppliers.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSuppliers_CellDoubleClick);
             // 
@@ -273,7 +273,7 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(775, 450);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.label9);
@@ -282,7 +282,7 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgvSuppliers);
             this.Name = "SuppliersPage";
-            this.Text = "Send";
+            this.Text = "SupplierPage";
             this.Load += new System.EventHandler(this.SuppliersPage_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSuppliers)).EndInit();
             this.groupBox1.ResumeLayout(false);

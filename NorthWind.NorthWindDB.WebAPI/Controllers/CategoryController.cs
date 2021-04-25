@@ -23,7 +23,7 @@ namespace NorthWind.NorthWindDB.WebAPI.Controllers
         {
             if (id == 0)
             {
-                var responses = await northWindApiService.GetEntitiesAsync<Categories>(id);
+                var responses = await northWindApiService.GetEntitiesAsync<Categories>();
                 return Ok(responses);
             }
             var response = await northWindApiService.GetEntityAsync<Categories>(id);

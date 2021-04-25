@@ -23,7 +23,7 @@ namespace NorthWind.NorthWindDB.WebAPI.Controllers
         {
             if (id == 0)
             {
-                var responses = await northWindApiService.GetEntitiesAsync<Suppliers>(id);
+                var responses = await northWindApiService.GetEntitiesAsync<Suppliers>();
                 return Ok(responses);
             }
             var response = await northWindApiService.GetEntityAsync<Suppliers>(id);

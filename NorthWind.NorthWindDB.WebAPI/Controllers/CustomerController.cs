@@ -19,11 +19,11 @@ namespace NorthWind.NorthWindDB.WebAPI.Controllers
             this.northWindApiService = northWindApiService;
         }
         [HttpGet]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
-            if (id == 0)
+            if (string.IsNullOrEmpty(id))
             {
-                var responses = await northWindApiService.GetEntitiesAsync<Customers>(id);
+                var responses = await northWindApiService.GetEntitiesAsync<Customers>();
                 return Ok(responses);
             }
             var response = await northWindApiService.GetEntityAsync<Customers>(id);

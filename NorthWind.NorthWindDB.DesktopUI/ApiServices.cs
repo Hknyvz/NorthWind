@@ -22,7 +22,18 @@ namespace NorthWind.NorthWindDB.DesktopUI
         public async Task<T> GetEntityAsync<T>(int id) where T : class,IEntity
         {
             T entity=null;
-            var response = await httpClient.GetAsync($"{endPoint}/{id}");
+            var response = await httpClient.GetAsync($"{endPoint}/?id={id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                entity = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+            }
+            return entity;
+        }
+        public async Task<T> GetEntityAsync<T>(string id) where T : class, IEntity
+        {
+            T entity = null;
+            var response = await httpClient.GetAsync($"{endPoint}/?id={id}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -59,7 +70,7 @@ namespace NorthWind.NorthWindDB.DesktopUI
 
         public async Task<int> DeleteEntityAsync<T>(string id) where T : IEntity
         {
-            var response = await httpClient.DeleteAsync($"{endPoint}/{id}");
+            var response = await httpClient.DeleteAsync($"{endPoint}/?id={id}");
             return Convert.ToInt32(response.StatusCode);
         }
     }

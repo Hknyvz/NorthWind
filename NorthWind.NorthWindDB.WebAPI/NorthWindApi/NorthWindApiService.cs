@@ -19,6 +19,24 @@ namespace NorthWind.NorthWindDB.WebAPI.NorthWindApi
             this.httpClient = httpClient;
         }
 
+        public async Task<T> GetEntityAsync<T>(string id) where T : class, INorthWindEntity, new()
+        {
+            T entity = new T();
+
+            var response = await httpClient.GetAsync($"{entity}/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                entity = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+            }
+            else
+            {
+                entity = null;
+            }
+
+            return entity;
+        }
+
         public async Task<T> GetEntityAsync<T>(int id) where T : class, INorthWindEntity, new()
         {
             T entity = new T();
@@ -37,7 +55,7 @@ namespace NorthWind.NorthWindDB.WebAPI.NorthWindApi
             return entity;
         }
 
-        public async Task<IEnumerable<T>> GetEntitiesAsync<T>(int id) where T : class, INorthWindEntity, new()
+        public async Task<IEnumerable<T>> GetEntitiesAsync<T>() where T : class, INorthWindEntity, new()
         {
             T entity=new T();
             IEnumerable<T> entities;

@@ -11,7 +11,7 @@ namespace NorthWind.NorthWindDB.Entites.NorthWindEntities
         }
         public int Id { get; set; }
         public string CustomerId { get; set; }
-        public int? EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
         public string OrderDate { get; set; }
         public string RequiredDate { get; set; }
         public string ShippedDate { get; set; }
