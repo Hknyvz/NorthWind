@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Request Logs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" width="125px">Path</th>
+            <th scope="col">Sub Query</th>
+            <th scope="col">Method</th>
+            <th scope="col">Body</th>
+            <th scope="col">Create Date</th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+</table>
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script src="~/js/requestLogs.js"></script>

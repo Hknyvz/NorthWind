@@ -33,7 +33,7 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
                 string sqlDataType= dataType[propertyInfo.PropertyType.Name];
                 if (propertyInfo.CustomAttributes.Any(p => p.AttributeType.Name == "MaxLengthAttribute"))
                 {
-                    sqlDataType = sqlDataType.Replace("max", propertyInfo.CustomAttributes.SingleOrDefault(p => p.AttributeType.Name == "MaxLengthAttribute").ConstructorArguments[0].Value.ToString());
+                    sqlDataType = sqlDataType.Replace(dataType["maxLength"], propertyInfo.CustomAttributes.SingleOrDefault(p => p.AttributeType.Name == "MaxLengthAttribute").ConstructorArguments[0].Value.ToString());
                 }   
                 return sqlDataType;
             }

@@ -21,7 +21,8 @@ namespace NorthWind.NorthWindDB.ORM.NpgSql
             { "Int32", "int" },
             { "DateTime", "timestamp without time zone" },
             { "String", "varchar(2000)" },
-            { "Int16", "smallint" }
+            { "Int16", "smallint" },
+            {"maxLength","2000" }
         };
         public NpgSqlOperation()
         {

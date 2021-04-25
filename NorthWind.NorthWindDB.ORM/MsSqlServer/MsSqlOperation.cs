@@ -17,7 +17,8 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
             { "Int32", "int" },
             { "DateTime", "datetime2(7)" },
             { "String", "nvarchar(max)" },
-            { "Int16", "smallint" } 
+            { "Int16", "smallint" },
+            {"maxLength","max" }
         };
 
         public MsSqlOperation()
