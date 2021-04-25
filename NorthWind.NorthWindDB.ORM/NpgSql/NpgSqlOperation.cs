@@ -39,7 +39,6 @@ namespace NorthWind.NorthWindDB.ORM.NpgSql
                 masterSqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
                 masterSqlConnection.Close();
-                GetToLowerConnection(dbName);
                 return true;
             }
             return false;
@@ -106,7 +105,13 @@ namespace NorthWind.NorthWindDB.ORM.NpgSql
 
         public DbDataReader GetEntities<TEntity>(out DbConnection dbConnection) where TEntity : IEntity
         {
-            throw new NotImplementedException();
+            Type type = typeof(TEntity);
+            string command = $"Select * from public.\"{type.Name}\"";
+            NpgsqlCommand sqlCommand = new NpgsqlCommand(command, npgsqlConnection);
+            OpenConnection();
+            DbDataReader dbDataReader = sqlCommand.ExecuteReader();
+            dbConnection = npgsqlConnection;
+            return dbDataReader;
         }
 
         public void Add<TEntity>(TEntity entity) where TEntity : IEntity
@@ -164,22 +169,6 @@ namespace NorthWind.NorthWindDB.ORM.NpgSql
             return newSqlConneciton;
         }
 
-        private void GetToLowerConnection(string dbName)
-        {
-            string[] split = npgsqlConnection.ConnectionString.Split(" ");
-            string newSqlConneciton = null;
-            for (int i = 0; i < split.Length; i++)
-            {
-                if (split[i].ToLower().StartsWith("database"))
-                {
-                    string subString = split[i].Remove(9);
-                    subString += $"{dbName};";
-                    split[i] = subString;
-                }
-                newSqlConneciton += $"{split[i]} ";
-            }
-            npgsqlConnection.ConnectionString = newSqlConneciton;
-        }
         private string GetDbName()
         {
             string subString = null;
