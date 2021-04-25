@@ -15,7 +15,7 @@ namespace NorthWind.NorthWindDB.Entites.LogEntities
       
         [MaxLength(100)]
         public string Path { get; set; }
-        public short SatatusCode { get; set; }
+        public short StatusCode { get; set; }
         public DateTime CreateDate { get; set; }
     }
 }

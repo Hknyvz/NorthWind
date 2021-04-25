@@ -32,5 +32,9 @@ namespace NorthWind.NorthWindDB.BLL.LogManager.Concrete
             requestLogDAL.Add(requestLog);
         }
 
+        public IEnumerable<RequestLog> GetRequestLogs()
+        {
+            return requestLogDAL.GetRequestLogs();
+        }
     }
 }

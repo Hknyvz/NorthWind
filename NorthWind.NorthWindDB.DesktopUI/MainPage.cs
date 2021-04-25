@@ -69,8 +69,14 @@ namespace NorthWind.NorthWindDB.DesktopUI
 
         private void logs_Click(object sender, EventArgs e)
         {
-            LogsPage logsPage = new LogsPage();
-            logsPage.ShowDialog();
+            RequestLogsPage requestLogsPage = new RequestLogsPage();
+            requestLogsPage.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ResponseLogsPage responseLogsPage = new ResponseLogsPage();
+            responseLogsPage.ShowDialog();
         }
     }
 }

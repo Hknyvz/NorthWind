@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using NorthWind.NorthWindDB.Entites.LogEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace NorthWind.NorthWindDB.BLL.LogManager.Abstract
     public interface IResponseLogBLL
     {
         void Add(HttpResponse httpResponse);
+        ICollection<ResponseLog> GetResponseLogs();
     }
 }

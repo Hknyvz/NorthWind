@@ -24,10 +24,15 @@ namespace NorthWind.NorthWindDB.BLL.LogManager.Concrete
             {
                 Path = httpResponse.HttpContext.Request.Path.ToString(),
                 CreateDate = DateTime.Now,
-                SatatusCode = Convert.ToInt16(httpResponse.StatusCode),
+                StatusCode = Convert.ToInt16(httpResponse.StatusCode),
             };
 
             responseLogDAL.Add(responseLog);
+        }
+
+        public ICollection<ResponseLog> GetResponseLogs()
+        {
+            return responseLogDAL.GetResponseLogs();
         }
     }
 }

@@ -10,5 +10,6 @@ namespace NorthWind.NorthWindDB.DAL.LogDAL.Abstract
     public interface IResponseLogDAL
     {
         void Add(ResponseLog responseLog);
+        ICollection<ResponseLog> GetResponseLogs();
     }
 }

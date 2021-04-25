@@ -10,5 +10,7 @@ namespace NorthWind.NorthWindDB.DAL.LogDAL.Abstract
     public interface IRequestLogDAL
     {
         void Add(RequestLog requestLog);
+
+        ICollection<RequestLog> GetRequestLogs();
     }
 }

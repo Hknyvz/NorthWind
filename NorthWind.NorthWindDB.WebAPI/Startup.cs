@@ -9,6 +9,7 @@ using NorthWind.NorthWindDB.BLL.Services;
 using NorthWind.NorthWindDB.LogLayer;
 using NorthWind.NorthWindDB.ORM;
 using NorthWind.NorthWindDB.ORM.MsSqlServer;
+using NorthWind.NorthWindDB.ORM.NpgSql;
 using NorthWind.NorthWindDB.WebAPI.NorthWindApi;
 using System;
 using System.Collections.Generic;

@@ -37,6 +37,7 @@ namespace NorthWind.NorthWindDB.DesktopUI
             this.employees = new System.Windows.Forms.Button();
             this.shippers = new System.Windows.Forms.Button();
             this.logs = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // orders
@@ -115,15 +116,26 @@ namespace NorthWind.NorthWindDB.DesktopUI
             this.logs.Name = "logs";
             this.logs.Size = new System.Drawing.Size(350, 41);
             this.logs.TabIndex = 7;
-            this.logs.Text = "Logs";
+            this.logs.Text = "Request Logs";
             this.logs.UseVisualStyleBackColor = true;
             this.logs.Click += new System.EventHandler(this.logs_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(12, 398);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(350, 41);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Response Logs";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 438);
+            this.ClientSize = new System.Drawing.Size(374, 453);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.logs);
             this.Controls.Add(this.shippers);
             this.Controls.Add(this.employees);
@@ -148,5 +160,6 @@ namespace NorthWind.NorthWindDB.DesktopUI
         private System.Windows.Forms.Button employees;
         private System.Windows.Forms.Button shippers;
         private System.Windows.Forms.Button logs;
+        private System.Windows.Forms.Button button1;
     }
 }

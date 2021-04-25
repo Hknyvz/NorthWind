@@ -12,5 +12,7 @@ namespace NorthWind.NorthWindDB.BLL.LogManager.Abstract
     {
         void Add(HttpRequest httpRequest,string body);
 
+        IEnumerable<RequestLog> GetRequestLogs();
+
     }
 }

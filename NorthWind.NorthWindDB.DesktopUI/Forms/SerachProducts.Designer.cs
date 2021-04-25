@@ -145,7 +145,7 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
             this.Controls.Add(this.dgvProducts);
             this.Controls.Add(this.btnOk);
             this.Name = "SearchProducts";
-            this.Text = "Ok";
+            this.Text = "Search Products";
             this.Load += new System.EventHandler(this.SerachProducts_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).EndInit();
             this.ResumeLayout(false);

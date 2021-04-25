@@ -1,7 +1,7 @@
 ﻿
 namespace NorthWind.NorthWindDB.DesktopUI.Forms
 {
-    partial class LogsPage
+    partial class ResponseLogsPage
     {
         /// <summary>
         /// Required designer variable.
@@ -29,35 +29,36 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvRequestLogs = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRequestLogs)).BeginInit();
+            this.dgvResponseLogs = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResponseLogs)).BeginInit();
             this.SuspendLayout();
             // 
-            // dgvRequestLogs
+            // dgvResponseLogs
             // 
-            this.dgvRequestLogs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRequestLogs.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dgvRequestLogs.Location = new System.Drawing.Point(0, 223);
-            this.dgvRequestLogs.Name = "dgvRequestLogs";
-            this.dgvRequestLogs.RowTemplate.Height = 25;
-            this.dgvRequestLogs.Size = new System.Drawing.Size(800, 227);
-            this.dgvRequestLogs.TabIndex = 0;
+            this.dgvResponseLogs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResponseLogs.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dgvResponseLogs.Location = new System.Drawing.Point(0, 99);
+            this.dgvResponseLogs.Name = "dgvResponseLogs";
+            this.dgvResponseLogs.RowTemplate.Height = 25;
+            this.dgvResponseLogs.Size = new System.Drawing.Size(800, 351);
+            this.dgvResponseLogs.TabIndex = 0;
             // 
-            // LogsPage
+            // ResponseLogsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.dgvRequestLogs);
-            this.Name = "LogsPage";
-            this.Text = "LogsPage";
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRequestLogs)).EndInit();
+            this.Controls.Add(this.dgvResponseLogs);
+            this.Name = "ResponseLogsPage";
+            this.Text = "ResponseLogsPage";
+            this.Load += new System.EventHandler(this.ResponseLogsPage_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResponseLogs)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dgvRequestLogs;
+        private System.Windows.Forms.DataGridView dgvResponseLogs;
     }
 }

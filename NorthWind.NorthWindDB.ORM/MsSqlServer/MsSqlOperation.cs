@@ -1,6 +1,8 @@
 ﻿using NorthWind.NorthWindDB.Entites;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
@@ -37,7 +39,7 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
             Type type = typeof(T);
             string sqlCommandText = CreateTableCommand(type);
             SqlCommand sqlCommand = new SqlCommand(sqlCommandText, sqlConnection);
-            sqlConnection.Open();
+            OpenConnection();
             sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
         }
@@ -142,9 +144,28 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
             command += ")";
             SqlCommand sqlCommand = new SqlCommand(command, sqlConnection);
 
-            sqlConnection.Open();
+            OpenConnection();
             sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
+        }
+
+        public DbDataReader GetEntities<TEntity>(out DbConnection dbConnection) where TEntity : IEntity
+        {
+            Type type = typeof(TEntity);
+            string command = $"Select * from dbo.{type.Name}";
+            SqlCommand sqlCommand = new SqlCommand(command, sqlConnection);
+            OpenConnection();
+            DbDataReader dbDataReader = sqlCommand.ExecuteReader();
+            dbConnection = sqlConnection;
+            return dbDataReader;
+        }
+
+        private void OpenConnection()
+        {
+            if (sqlConnection.State==ConnectionState.Closed)
+            {
+                sqlConnection.Open();
+            }
         }
     }
 }

@@ -14,5 +14,6 @@ namespace NorthWind.NorthWindDB.ORM
         bool CreateDatabase();
         void CreateTable<T>()where T:IEntity;
         void Add<TEntity>(TEntity entity) where TEntity : IEntity;
+        DbDataReader GetEntities<TEntity>(out DbConnection dbConnection) where TEntity : IEntity; 
     }
 }

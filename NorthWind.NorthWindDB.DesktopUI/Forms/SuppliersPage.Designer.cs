@@ -316,7 +316,6 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
         private System.Windows.Forms.TextBox tbxCity;
         private System.Windows.Forms.TextBox tbxCountry;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox T;
         private System.Windows.Forms.TextBox tbxPostalCode;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Button btnDelete;
