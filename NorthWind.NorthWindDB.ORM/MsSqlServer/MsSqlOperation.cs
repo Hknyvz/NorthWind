@@ -5,19 +5,24 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace NorthWind.NorthWindDB.ORM.MsSqlServer
 {
     public class MsSqlOperation : IDatabaseOperation
     {
         SqlConnection sqlConnection;
+        Dictionary<string, string> dataType = new Dictionary<string, string>
+        { 
+            { "Int32", "int" },
+            { "DateTime", "datetime2(7)" },
+            { "String", "nvarchar(max)" },
+            { "Int16", "smallint" } 
+        };
+
         public MsSqlOperation()
         {
-            sqlConnection = ContextDb.Connection;
+            sqlConnection = MsSqlContext.Connection;
         }
         public bool CreateDatabase()
         {
@@ -30,6 +35,7 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
                 masterSqlConnection.Open();
                 sqlCommand.ExecuteNonQuery();
                 masterSqlConnection.Close();
+                sqlCommand.Dispose();
                 return true;
             }
             return false;
@@ -42,6 +48,7 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
             OpenConnection();
             sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
+            sqlCommand.Dispose();
         }
         private bool IsExistDb(SqlConnection connectionString, string databaseName)
         {
@@ -72,7 +79,7 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
             string end = null;
             foreach (var item in type.GetProperties())
             {
-                EntityReflection entityReflection = new EntityReflection(item);
+                EntityReflection entityReflection = new EntityReflection(item,dataType);
 
 
                 if (entityReflection.Identity)
@@ -96,7 +103,7 @@ namespace NorthWind.NorthWindDB.ORM.MsSqlServer
             string newSqlConneciton = null;
             for (int i = 0; i < split.Length; i++)
             {
-                if (split[i].StartsWith("database"))
+                if (split[i].ToLower().StartsWith("database"))
                 {
                     string subString = split[i].Remove(9);
                     subString += "master;";

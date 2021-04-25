@@ -5,16 +5,17 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NorthWind.NorthWindDB.ORM
+namespace NorthWind.NorthWindDB.ORM.MsSqlServer
 {
     class EntityReflection
     {
-        Dictionary<string, string> dataType = new Dictionary<string, string>() { { "Int32", "int" }, { "DateTime", "datetime2(7)" }, { "String", "nvarchar(max)" }, {"Int16","smallint"} };
+        Dictionary<string, string> dataType;
         PropertyInfo propertyInfo;
         
-        public EntityReflection(PropertyInfo propertyInfo)
+        public EntityReflection(PropertyInfo propertyInfo,Dictionary<string,string> dataType)
         {
             this.propertyInfo = propertyInfo;
+            this.dataType = dataType;
         }
         
         public string PropertyName

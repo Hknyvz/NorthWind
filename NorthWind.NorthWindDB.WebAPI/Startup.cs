@@ -30,7 +30,7 @@ namespace NorthWind.NorthWindDB.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScopedObjects();
-            services.AddDbCreate<MsSqlOperation>();
+            services.AddDbCreate<NpgSqlOperation>();
             services.AddHttpClient<NorthWindApiService>(option => option.BaseAddress = new Uri(Configuration["baseUrl"]));
             services.AddControllers();
             services.AddCors(options => options.AddDefaultPolicy(build => build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));

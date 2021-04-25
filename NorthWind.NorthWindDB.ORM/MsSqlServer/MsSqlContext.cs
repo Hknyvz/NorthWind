@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NorthWind.NorthWindDB.ORM.MsSqlServer
 {
-    public class ContextDb
+    public class MsSqlContext
     {
         private static SqlConnection connection;
 

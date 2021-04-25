@@ -36,6 +36,7 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
             apiServicesEmployee = new ApiServices("employee");
             apiServicesProduct = new ApiServices("product");
             OrderDetails = new List<OrderDetails>();
+            orders = new List<Orders>();
             CheckForIllegalCrossThreadCalls = false;
         }
 
@@ -45,7 +46,7 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
             btnAddProduct.Enabled = false;
             btnCustomerSerach.Enabled = false;
             btnEmployeeSearch.Enabled = false;
-            await FillDataGridView();
+            await FillArray();
             btnAddProduct.Enabled = true;
             btnCustomerSerach.Enabled = true;
             btnEmployeeSearch.Enabled = true;
@@ -56,9 +57,9 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
             Cursor = Cursors.Default;
         }
 
-        private async Task FillDataGridView()
+        private void FillDataGridView()
         {
-            await FillArray();
+
             dgvOrders.Rows.Clear();
             Type type = typeof(Orders);
             foreach (var item in type.GetProperties())
@@ -90,6 +91,7 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
         private async Task FillArray()
         {
             orders = await apiServices.GetEntitiesAsync<Orders>();
+            FillDataGridView();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -116,7 +118,7 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
         private void btnEmployeeSearch_Click(object sender, EventArgs e)
         {
             EmployeeSearch employeeSearch = new EmployeeSearch();
-            if (employeeSearch.ShowDialog()==DialogResult.OK)
+            if (employeeSearch.ShowDialog() == DialogResult.OK)
             {
                 Employee = employeeSearch.Employee;
                 tbxEmployee.Text = $"{Employee.FirstName} {Employee.LastName}";
@@ -134,16 +136,16 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
             tbxPostalCode.Text = order.ShipAddress.PostalCode;
             tbxRegion.Text = order.ShipAddress.Region;
             tbxStreet.Text = order.ShipAddress.Street;
-            await apiServicesCustomer.GetEntityAsync<Customers>(order.CustomerId).ContinueWith((res)=> tbxCustomer.Text=res.Result.CompanyName);
+            await apiServicesCustomer.GetEntityAsync<Customers>(order.CustomerId).ContinueWith((res) => tbxCustomer.Text = res.Result.CompanyName);
             await apiServicesEmployee.GetEntityAsync<Employess>(order.EmployeeId).ContinueWith((res) => tbxEmployee.Text = $"{res.Result.FirstName} {res.Result.LastName}");
-            
+
             dtpOerderDate.Value = Convert.ToDateTime(order.OrderDate);
             dtpRequireDate.Value = Convert.ToDateTime(order.RequiredDate);
             tbxShipName.Text = order.ShipName;
             tbxFreight.Text = order.Freight.ToString();
             foreach (var item in order.Details)
             {
-                await apiServicesProduct.GetEntityAsync<Products>(item.ProductId).ContinueWith((res)=>lbProducts.Items.Add(res.Result.Name));
+                await apiServicesProduct.GetEntityAsync<Products>(item.ProductId).ContinueWith((res) => lbProducts.Items.Add(res.Result.Name));
             }
             cbxShipper.SelectedValue = order.ShipVia;
             dtpShippedDate.Value = Convert.ToDateTime(order.ShippedDate);
@@ -151,7 +153,7 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
             isUpdate = true;
         }
 
-        
+
 
         private async void btnSend_Click(object sender, EventArgs e)
         {
@@ -174,9 +176,9 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
                 ShipName = tbxShipName.Text,
                 ShipVia = Convert.ToInt32(cbxShipper.SelectedValue),
                 Details = OrderDetails,
-                ShippedDate=dtpShippedDate.Text
+                ShippedDate = dtpShippedDate.Text
             };
-           
+
             if (isUpdate)
             {
                 order.Id = id;
@@ -187,7 +189,7 @@ namespace NorthWind.NorthWindDB.DesktopUI.Forms
             {
                 await apiServices.AddEntityAsync(order);
             }
-            await FillDataGridView();
+            await FillArray();
             Clear();
         }
 
